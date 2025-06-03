@@ -323,6 +323,7 @@ if submit_button:
                     # 加载模型并预测
                     st.info("Loading the model and predicting the emission wavelength...")
                     predictor = TabularPredictor.load("./ag-20250529_123557")
+                    predictions = predictor.predict(predict_df)
 
                     # 指定模型列表
                     model_options = ['LightGBM',
@@ -335,19 +336,14 @@ if submit_button:
                                      'MultiModalPredictor',
                                      'WeightedEnsemble_L2'
                                     ]
-                    predictions = predictor.predict(predict_df)
+                    
 
                     # 获取预测结果
                     predictions_dict = {}
                     for model in model_options:
-                        try:
-                            predictions = predictor.predict(predict_df, model=model)
-                            predictions_dict[model] = predictions.astype(int).apply(lambda x: f"{x} nm")
-                            st.error(f"1")
-                        except:
-                            # 如果模型不存在，跳过
-                            st.error(f"2")
-                            continue
+                        predictions = predictor.predict(predict_df, model=model)
+                        predictions_dict[model] = predictions.astype(int).apply(lambda x: f"{x} nm")
+                        st.error(f"1")
 
                     # 显示预测结果
                     st.write("Prediction Results:")
