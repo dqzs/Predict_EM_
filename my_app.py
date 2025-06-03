@@ -325,11 +325,17 @@ if submit_button:
                     predictor = TabularPredictor.load("./ag-20250529_123557")
 
                     # 指定模型列表
-                    model_options = [
-                        "LightGBMLarge", "XGBoost", "LightGBM",
-                        "WeightedEnsemble_L2", "LightGBMXT",
-                        "CatBoost", "NeuralNetTorch"
-                    ]
+                    model_options = ['LightGBM',
+                                     'LightGBMXT',
+                                     'CatBoost',
+                                     'XGBoost',
+                                     'NeuralNetTorch',
+                                     'VowpalWabbit',
+                                     'LightGBMLarge',
+                                     'MultiModalPredictor',
+                                     'WeightedEnsemble_L2'
+                                    ]
+                    predictions = predictor.predict(predict_df)
 
                     # 获取预测结果
                     predictions_dict = {}
